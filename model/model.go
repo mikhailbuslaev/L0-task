@@ -1,11 +1,4 @@
-package order
-
-import (
-	"database/sql/driver"
-	"encoding/json"
-	"fmt"
-	"errors"
-)
+package model
 
 type Delivery struct {
 	Name	 string `json:"name"`
@@ -61,31 +54,3 @@ type Order struct{
 	Oof_shard 			string 		`json:"oof_shard"`
 }
 
-func (o Order) Unmarshall(buf []byte) error {
-	err := json.Unmarshal(buf, &o)
-	if err != nil {
-		return err
-	}
-	if o.Order_uid == "" {
-		return errors.New("This is not order")
-	}
-	return nil
-}
-
-func (o Order) Value() (driver.Value, error) {
-	return json.Marshal(o)
-}
-
-func (o Order) Scan(v interface{}) error {
-	if v == nil {
-		return nil
-	}
-	switch data := v.(type) {
-	case string:
-		return json.Unmarshal([]byte(data), &o)
-	case []byte:
-		return json.Unmarshal(data, &o)
-	default:
-		return fmt.Errorf("cannot scan type %t into Map", v)
-	}
-}

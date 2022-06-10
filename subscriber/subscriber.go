@@ -1,30 +1,29 @@
 package subscriber
 
 import (
-	"log"
+	"database/sql"
+	"encoding/json"
 	"fmt"
+	"log"
+	. "nats-subscriber/model"
 	"os"
 	"os/signal"
-	. "nats-subscriber/order"
-	stan "github.com/nats-io/stan.go"
-	"database/sql"
+
 	_ "github.com/lib/pq"
+	stan "github.com/nats-io/stan.go"
 )
 
 var (
-	clusterID string = "test-cluster"
-	clientID  string = "subscriber"
-	channelID string = "foo"
+	clusterID string  = "test-cluster"
+	clientID  string  = "subscriber"
+	channelID string  = "foo"
+	Cache     []Order = make([]Order, 0, 10000)
 )
 
-type Subscriber struct {
-	Cache []Order
-}
+func connectToDB() (*sql.DB, error) {
 
-func connectToDB() (*sql.DB, error){
-
-	connectionString := "host=localhost port=8888 user=postgres "+
-	"password=postgres dbname=test sslmode=disable"
+	connectionString := "host=localhost port=8888 user=postgres " +
+		"password=postgres dbname=test sslmode=disable"
 
 	db, err := sql.Open("postgres", connectionString)
 	if err != nil {
@@ -37,30 +36,30 @@ func connectToDB() (*sql.DB, error){
 	return db, err
 }
 
-func (s Subscriber) Run() {
+func Run() {
 	// Connect to stan cluster
 	sc, err := stan.Connect(clusterID, clientID)
 	if err != nil {
 		fmt.Println("Cannot connect to cluster")
 	}
 
-	// Cache define
-	s.Cache = make([]Order, 0, 10000)
-	
 	// Database connect
 	db, err := connectToDB()
 	if err != nil {
 		log.Fatal("Subscriber cannot conect to database")
 	}
-
 	defer db.Close()
+
 	// Parse and append correct messages to cache
 	msgHandler := func(m *stan.Msg) {
 		fmt.Printf("Received a message: %s\n", string(m.Data))
+		// Parsing message
 		order := Order{}
-		err := order.Unmarshall(m.Data)
+		err := json.Unmarshal(m.Data, &order)
+		fmt.Printf("%#v\n", order)
 		if err == nil {
-			s.Cache = append(s.Cache, order)
+			// Append message to cache
+			Cache = append(Cache, order)
 			// Push order to db
 			//err = recordToDB(order)
 		} else {
@@ -79,7 +78,7 @@ func (s Subscriber) Run() {
 	signalChan := make(chan os.Signal, 1)
 	signal.Notify(signalChan, os.Interrupt)
 
-	<- signalChan
+	<-signalChan
 	fmt.Printf("\nReceived an interrupt, unsubscribing and closing connection...\n\n")
 	sub.Unsubscribe()
 	sc.Close()
