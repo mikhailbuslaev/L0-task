@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	go subsriber.Run()
+	go subscriber.Run()
 	reqHandler := func(ctx *fasthttp.RequestCtx) {
 		if string(ctx.Path()) == "/order" {
 			fmt.Println(subscriber.Cache)

@@ -66,6 +66,6 @@ func main() {
 	  }`)
 	// Publish message
 	sc.Publish("foo", msg)
-	fmt.Printf("Published message : '%s', channel: '%s' \n", msg, channelID)
+	fmt.Printf("Published message to channel: '%s' \n", channelID)
 }
 
