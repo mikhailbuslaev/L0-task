@@ -1,18 +1,27 @@
-package main
+package publisher
 
 import (
 	"fmt"
 	stan "github.com/nats-io/stan.go"
 )
-var (
-	clusterID string = "test-cluster"
-	clientID  string = "publisher"
-	channelID string = "foo"
-)
 
-func main() {
+type Publisher struct {
+	Name string
+	Channel string
+	Cluster string
+}
+
+func New() *Publisher {
+	s := &Subscriber{}
+	s.Name = "publisher"
+	s.Channel = "foo"
+	s.Cluster = "test-cluster"
+	return s
+}
+
+func (p *Publisher) Publish() {
 	// Connecting to stan cluster
-	sc, _ := stan.Connect(clusterID, clientID)
+	sc, _ := stan.Connect(p.Cluster, p.Name)
 	defer sc.Close()
 	// Message example
 	msg := []byte(`{
@@ -65,7 +74,7 @@ func main() {
 		"oof_shard": "1"
 	  }`)
 	// Publish message
-	sc.Publish("foo", msg)
-	fmt.Printf("Published message to channel: '%s' \n", channelID)
+	sc.Publish(p.Channel, msg)
+	fmt.Printf("Published message to channel: '%s' \n", p.Channel)
 }
 
