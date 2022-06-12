@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"errors"
 	"sync"
 )
 
@@ -26,11 +27,11 @@ func (c *Cache) Add(o *Order) {
 	c.Data[o.Id] = *o
 }
 
-func (c *Cache) Get(key string) interface{} {
+func (c *Cache) Get(key string) (Order, error) {
 	c.RLock()
 	defer c.RUnlock()
 	if c.Data[key].Id != "" {
-		return c.Data[key]
+		return c.Data[key], nil
 	}
-	return nil
+	return c.Data[key], errors.New("No order here")
 }

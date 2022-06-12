@@ -24,7 +24,11 @@ func New() *Publisher {
 
 func (p *Publisher) Publish(msg []byte) {
 	// Connecting to stan cluster
-	sc, _ := stan.Connect(p.Cluster, p.Name)
+	sc, err := stan.Connect(p.Cluster, p.Name)
+	if err != nil {
+		fmt.Println("Cannot connect to invalid cluster")
+		return
+	}
 	defer sc.Close()
 	// Publish message
 	sc.Publish(p.Channel, msg)

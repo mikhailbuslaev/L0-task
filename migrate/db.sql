@@ -1,5 +1,5 @@
 create table if not exists orders (
-    id varchar(25) not null,
+    id varchar(25) not null unique,
     body json not null
 );
 
