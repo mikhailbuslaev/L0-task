@@ -1,6 +1,6 @@
 create table if not exists orders (
     id varchar(25) not null,
-    body json not null,
+    body json not null
 );
 
 create or replace procedure push_order(

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"nats-subscriber/publisher"
 	"nats-subscriber/subscriber"
 	"nats-subscriber/cache"
 	"github.com/valyala/fasthttp"
@@ -12,8 +13,10 @@ func main() {
 	sub := subscriber.New()
 	c := cache.New()
 	sub.ConnectCache(c)
-
 	go sub.Run()
+
+	pub := publisher.New()
+	go pub.Run()
 	
 	reqHandler := func(ctx *fasthttp.RequestCtx) {
 		if string(ctx.Path()) == "/order" {

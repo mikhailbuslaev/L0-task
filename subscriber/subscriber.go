@@ -13,10 +13,6 @@ import (
 	stan "github.com/nats-io/stan.go"
 )
 
-var (
-	Cache []Order = make([]Order, 0, 10000)
-)
-
 type Subscriber struct {
 	Name string
 	Channel string
@@ -65,12 +61,12 @@ func (s *Subscriber) restoreCache(db *sql.DB) error {
 		if err != nil {
 			return err
 		}
-		s.Cache.Add(o)
+		s.Cache.Add(&o)
 	}
 	return nil
 }
 
-func pushToDB(o Order, db *sql.DB) error{
+func pushToDB(o cache.Order, db *sql.DB) error{
 	_, err := db.Exec("call push_order('"+o.Id+"', '"+o.Data+"');")
 	if err != nil {
 		return err
@@ -103,12 +99,12 @@ func (s *Subscriber) Run() {
 	msgHandler := func(m *stan.Msg) {
 		// Parsing message
 		order := cache.Order{}
-		err := json.Unmarshal(m.Data, &order.Id)
-		order.Data = m.Data
-		fmt.Printf("Recieved and parsed message:"+order.Id+"\n")
+		err := json.Unmarshal(m.Data, &order)
+		order.Data = string(m.Data)
+		fmt.Printf("Recieved message:"+order.Id+"\n")
 		if err == nil {
 			// Append message to cache
-			s.Cache.Add(order)
+			s.Cache.Add(&order)
 			// Push order to db
 			err = pushToDB(order, db)
 			if err != nil {

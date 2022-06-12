@@ -5,23 +5,32 @@ import (
 )
 
 type Cache struct {
-	sync.Mutex
+	sync.RWMutex
 	Data map[string]Order
 }
 
 type Order struct {
-	Id string
-	Data []byte
+	Id string `json:"order_uid"`
+	Data string
 }
 
 func New() *Cache {
 	c := &Cache{}
-	c.Data := make(map[string]Order)
+	c.Data = make(map[string]Order)
 	return c
 }
 
 func (c *Cache) Add(o *Order) {
 	c.Lock()
 	defer c.Unlock()
-	c.Data[o.Id] = o
+	c.Data[o.Id] = *o
+}
+
+func (c *Cache) Get(key string) interface{} {
+	c.RLock()
+	defer c.RUnlock()
+	if c.Data[key].Id != "" {
+		return c.Data[key]
+	}
+	return nil
 }
