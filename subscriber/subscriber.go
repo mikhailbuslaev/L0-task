@@ -2,31 +2,34 @@ package subscriber
 
 import (
 	"database/sql"
+	"encoding/csv"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"nats-subscriber/cache"
 	"os"
 	"os/signal"
-	"errors"
 
 	_ "github.com/lib/pq"
 	stan "github.com/nats-io/stan.go"
 )
 
 type Subscriber struct {
-	Name string
-	Channel string
-	Cluster string
-	Cache *cache.Cache
-	DbConfig DbConfig
+	Name        string
+	Channel     string
+	Cluster     string
+	RestoreFile string
+	Cache       *cache.Cache
+	DbConfig    DbConfig
 }
 
 type DbConfig struct {
-	Host string
-	Port string
-	User string
+	Host     string
+	Port     string
+	User     string
 	Password string
-	DbName string
+	DbName   string
 }
 
 func New() *Subscriber {
@@ -34,6 +37,7 @@ func New() *Subscriber {
 	s.Name = "subscriber"
 	s.Channel = "foo"
 	s.Cluster = "test-cluster"
+	s.RestoreFile = "restore.csv"
 	s.DbConfig.Host = "localhost"
 	s.DbConfig.Port = "5432"
 	s.DbConfig.User = "postgres"
@@ -47,8 +51,8 @@ func (s *Subscriber) ConnectCache(c *cache.Cache) {
 }
 
 func (s *Subscriber) getDBconnString() string {
-	return "host="+s.DbConfig.Host+" port="+s.DbConfig.Port+
-	" user="+s.DbConfig.User+" password="+s.DbConfig.Password+" dbname="+s.DbConfig.DbName+" sslmode=disable"
+	return "host=" + s.DbConfig.Host + " port=" + s.DbConfig.Port +
+		" user=" + s.DbConfig.User + " password=" + s.DbConfig.Password + " dbname=" + s.DbConfig.DbName + " sslmode=disable"
 }
 
 func (s *Subscriber) checkDB() bool {
@@ -57,10 +61,10 @@ func (s *Subscriber) checkDB() bool {
 		return false
 	}
 	err = db.Ping()
-	if err != nil {
-		return false
+	if err == nil {
+		return true
 	}
-	return true
+	return false
 }
 
 func (s *Subscriber) connectToDB() (*sql.DB, error) {
@@ -68,7 +72,7 @@ func (s *Subscriber) connectToDB() (*sql.DB, error) {
 	db, err := sql.Open("postgres", s.getDBconnString())
 	if err != nil {
 		return nil, err
-	} 
+	}
 	err = db.Ping()
 	if err != nil {
 		return nil, err
@@ -77,8 +81,8 @@ func (s *Subscriber) connectToDB() (*sql.DB, error) {
 }
 
 func (s *Subscriber) restoreCache(db *sql.DB) error {
-	if s.checkDB() != true {
-		return errors.New("Cannot restore cache: bad connection with database")
+	if !s.checkDB() {
+		return errors.New("cannot restore cache: bad connection with database")
 	}
 
 	s.Cache = cache.New()
@@ -98,11 +102,51 @@ func (s *Subscriber) restoreCache(db *sql.DB) error {
 	return nil
 }
 
-func (s *Subscriber) pushToDB(o cache.Order, db *sql.DB) error{
-	if s.checkDB() != true {
-		return errors.New("Cannot push to db: bad connection with database")
+func (s *Subscriber) pushToFile(o *cache.Order) error {
+	file, err := os.OpenFile(s.RestoreFile, os.O_APPEND|os.O_WRONLY, 0755)
+	if err != nil {
+		return err
 	}
-	_, err := db.Exec("call push_order('"+o.Id+"', '"+o.Data+"');")
+	defer file.Close()
+	w := csv.NewWriter(file)
+	defer w.Flush()
+	w.Comma = ';'
+	err = w.Write([]string{o.Id, o.Data})
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (s *Subscriber) restoreFromFile() error {
+	s.Cache = cache.New()
+	file, err := os.OpenFile(s.RestoreFile, os.O_RDWR, 0755)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	r := csv.NewReader(file)
+	r.Comma = ';'
+
+	for {
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+		s.Cache.Add(&cache.Order{Id: record[0], Data: record[1]})
+	}
+	os.Truncate(s.RestoreFile, 0)
+	return nil
+}
+
+func (s *Subscriber) pushToDB(o cache.Order, db *sql.DB) error {
+	if !s.checkDB() {
+		return errors.New("cannot push to db: bad connection with database")
+	}
+	_, err := db.Exec("call push_order('" + o.Id + "', '" + o.Data + "');")
 	if err != nil {
 		return err
 	}
@@ -118,16 +162,25 @@ func (s *Subscriber) Run() {
 
 	// Database connect
 	db, err := s.connectToDB()
+
 	if err != nil {
 		fmt.Println("Subscriber cannot connect to database")
 	}
 	defer db.Close()
 
+	// Cache restore
 	err = s.restoreCache(db)
 	if err != nil {
-		fmt.Printf("Cannot restore cache: %d \n", err)
+		fmt.Println(err)
 	} else {
-		fmt.Println("Succesfully restore cache")
+		fmt.Println("Succesfully restore postgres cache")
+	}
+
+	err = s.restoreFromFile()
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println("Succesfully restore csv cache")
 	}
 
 	// Parse and append correct messages to cache
@@ -136,14 +189,15 @@ func (s *Subscriber) Run() {
 		order := cache.Order{}
 		err := json.Unmarshal(m.Data, &order)
 		order.Data = string(m.Data)
-		fmt.Printf("Recieved message:"+order.Id+"\n")
+		fmt.Printf("Recieved message:" + order.Id + "\n")
 		if err == nil {
 			// Append message to cache
 			s.Cache.Add(&order)
 			// Push order to db
 			err = s.pushToDB(order, db)
 			if err != nil {
-				fmt.Printf("Cannot push to db: %d  \n", err)
+				fmt.Println(err)
+				fmt.Println(s.pushToFile(&order))
 			}
 		} else {
 			fmt.Printf("Invalid message: %d\n", err)
