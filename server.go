@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"log"
-	"strings"
+	"os"
+	"os/signal"
+	"nats-subscriber/cache"
 	"nats-subscriber/publisher"
 	"nats-subscriber/subscriber"
-	"nats-subscriber/cache"
+
 	"github.com/valyala/fasthttp"
 )
 
@@ -19,21 +21,45 @@ func main() {
 
 	pub := publisher.New()
 	go pub.Run()
-	
-	reqHandler := func(ctx *fasthttp.RequestCtx) {
-		query := strings.Split(string(ctx.Path()), "=")
-		if query[0] == "/order" {
-			order, err := sub.Cache.Get(query[1])
-			if err == nil {
-				ctx.Write([]byte(order.Data))
-			} else {
-				ctx.Write([]byte(`{"message": "server cannot find your order"}`))
-			}
+
+	getOrderHandler := func(ctx *fasthttp.RequestCtx) {
+		if string(ctx.Method()) != "POST" {
+			ctx.Write([]byte(`{"message": "'/order' accept only POST method"}`))
+			return
+		}
+		order, err := sub.Cache.Get(string(ctx.FormValue("id")))
+		if err == nil {
+			ctx.Write([]byte(order.Data))
+		} else {
+			ctx.Write([]byte(`{"message": "server cannot find your order"}`))
 		}
 	}
 
-	fmt.Println("Starting server...")
-	if err := fasthttp.ListenAndServe(":1111", reqHandler); err != nil {
-		log.Fatalf("error in ListenAndServe: %v", err)
+	staticHandler := func(ctx *fasthttp.RequestCtx) {
+		fasthttp.ServeFile(ctx, "static/index.html")
 	}
+
+	reqHandler := func(ctx *fasthttp.RequestCtx) {
+		path := string(ctx.Path())
+		switch path {
+		case "/order":
+			getOrderHandler(ctx)
+		default:
+			staticHandler(ctx)
+		}
+	}
+
+	go func(){
+		fmt.Println("Starting server...")
+		if err := fasthttp.ListenAndServe(":1111", reqHandler); err != nil {
+			log.Fatalf("error in ListenAndServe: %v", err)
+		}
+	}()
+
+	// Stop serving if receiving Ctrl+C interrupt
+	signalChan := make(chan os.Signal, 1)
+	signal.Notify(signalChan, os.Interrupt)
+		
+	<-signalChan
+	fmt.Println("Received an interrupt, end serving...")
 }

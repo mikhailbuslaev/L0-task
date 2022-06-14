@@ -12,7 +12,7 @@ type Cache struct {
 
 type Order struct {
 	Id string `json:"order_uid"`
-	Data string
+	Data string `json:"data"`
 }
 
 func New() *Cache {

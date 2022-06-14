@@ -3,6 +3,8 @@ package publisher
 import (
 	"time"
 	"fmt"
+	"os"
+	"os/signal"
 	stan "github.com/nats-io/stan.go"
 )
 
@@ -37,7 +39,8 @@ func (p *Publisher) Publish(msg []byte) {
 
 func (p *Publisher) Run() {
 	var i int = 0
-	for {
+	go func(){
+		for {
 		p.Publish([]byte(`{
 			"order_uid": "`+fmt.Sprintf("%d", i)+`",
 			"track_number": "WBILMTESTTRACK",
@@ -90,4 +93,11 @@ func (p *Publisher) Run() {
 		  i++
 		  time.Sleep(p.Timeout*time.Second)
 	}
+}()
+		// Unsubscribe if receiving Ctrl+C interrupt
+		signalChan := make(chan os.Signal, 1)
+		signal.Notify(signalChan, os.Interrupt)
+	
+		<-signalChan
+		fmt.Println("Received an interrupt, end publishing...")
 }

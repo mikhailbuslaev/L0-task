@@ -61,10 +61,7 @@ func (s *Subscriber) checkDB() bool {
 		return false
 	}
 	err = db.Ping()
-	if err == nil {
-		return true
-	}
-	return false
+	return err == nil
 }
 
 func (s *Subscriber) connectToDB() (*sql.DB, error) {
@@ -175,7 +172,7 @@ func (s *Subscriber) Run() {
 	} else {
 		fmt.Println("Succesfully restore postgres cache")
 	}
-
+	// Restore csv cache
 	err = s.restoreFromFile()
 	if err != nil {
 		fmt.Println(err)
@@ -196,8 +193,9 @@ func (s *Subscriber) Run() {
 			// Push order to db
 			err = s.pushToDB(order, db)
 			if err != nil {
-				fmt.Println(err)
-				fmt.Println(s.pushToFile(&order))
+				fmt.Printf("Cannot push to db: %d\n", err)
+				// Temporary saving
+				_ = s.pushToFile(&order)
 			}
 		} else {
 			fmt.Printf("Invalid message: %d\n", err)
@@ -216,7 +214,7 @@ func (s *Subscriber) Run() {
 	signal.Notify(signalChan, os.Interrupt)
 
 	<-signalChan
-	fmt.Printf("\nReceived an interrupt, unsubscribing and closing connection...\n\n")
+	fmt.Println("Received an interrupt, unsubscribing and closing connection...")
 	sub.Unsubscribe()
 	sc.Close()
 }
