@@ -2,6 +2,7 @@ package publisher
 
 import (
 	"time"
+	"math/rand"
 	"fmt"
 	"os"
 	"os/signal"
@@ -24,6 +25,10 @@ func New() *Publisher {
 	return p
 }
 
+func randomizeId() int{
+	return rand.Int() % 100000000
+}
+
 func (p *Publisher) Publish(msg []byte) {
 	// Connecting to stan cluster
 	sc, err := stan.Connect(p.Cluster, p.Name)
@@ -42,7 +47,7 @@ func (p *Publisher) Run() {
 	go func(){
 		for {
 		p.Publish([]byte(`{
-			"order_uid": "`+fmt.Sprintf("%d", i)+`",
+			"order_uid": "`+fmt.Sprintf("%d", randomizeId())+`",
 			"track_number": "WBILMTESTTRACK",
 			"entry": "WBIL",
 			"delivery": {
