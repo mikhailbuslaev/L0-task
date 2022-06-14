@@ -1,0 +1,10 @@
+name : "test-subscriber"
+channel : "foo"
+cluster : "test-cluster"
+restorefile : "restore.csv"
+dbconfig :
+  host : "localhost"
+  port : "5432"
+  user : "postgres"
+  password : "postgres"
+  dbname : "orders_test"

@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 	"nats-subscriber/cache"
 	"nats-subscriber/publisher"
 	"nats-subscriber/subscriber"
@@ -62,4 +63,5 @@ func main() {
 		
 	<-signalChan
 	fmt.Println("Received an interrupt, end serving...")
+	time.Sleep(3*time.Second)
 }

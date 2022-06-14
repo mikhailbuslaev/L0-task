@@ -6,6 +6,7 @@ require (
 	github.com/lib/pq v1.10.4
 	github.com/nats-io/stan.go v0.10.2
 	github.com/valyala/fasthttp v1.37.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (

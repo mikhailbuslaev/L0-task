@@ -1,0 +1,4 @@
+name : "test-publisher"
+channel : "foo"
+cluster : "test-cluster"
+timeout : 30

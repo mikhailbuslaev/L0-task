@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"nats-subscriber/cache"
+	"nats-subscriber/config"
 	"os"
 	"os/signal"
 
@@ -34,15 +35,7 @@ type DbConfig struct {
 
 func New() *Subscriber {
 	s := &Subscriber{}
-	s.Name = "subscriber"
-	s.Channel = "foo"
-	s.Cluster = "test-cluster"
-	s.RestoreFile = "restore.csv"
-	s.DbConfig.Host = "localhost"
-	s.DbConfig.Port = "5432"
-	s.DbConfig.User = "postgres"
-	s.DbConfig.Password = "postgres"
-	s.DbConfig.DbName = "orders_test"
+	config.Parse(s, "config/subscriber.yaml")
 	return s
 }
 
