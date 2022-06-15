@@ -28,7 +28,7 @@ func main() {
 			ctx.Write([]byte(`{"message": "'/order' accept only POST method"}`))
 			return
 		}
-		order, err := sub.Cache.Get(string(ctx.FormValue("id")))
+		order, err := sub.Cache.Get(string(ctx.Request.Header.Peek("id")))
 		if err == nil {
 			ctx.Write([]byte(order.Data))
 		} else {

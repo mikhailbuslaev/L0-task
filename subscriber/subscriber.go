@@ -75,7 +75,6 @@ func (s *Subscriber) restoreCache(db *sql.DB) error {
 		return errors.New("cannot restore cache: bad connection with database")
 	}
 
-	s.Cache = cache.New()
 	rows, err := db.Query("select * from orders;")
 	if err != nil {
 		return err
@@ -109,7 +108,6 @@ func (s *Subscriber) pushToFile(o *cache.Order) error {
 }
 
 func (s *Subscriber) restoreFromFile() error {
-	s.Cache = cache.New()
 	file, err := os.OpenFile(s.RestoreFile, os.O_RDWR, 0755)
 	if err != nil {
 		return err

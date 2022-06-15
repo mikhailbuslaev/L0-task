@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +9,60 @@
 
 <body>
   <h1>Order finder</h1>
-  <form action="/order" method="post">
+  <form name="inputForm" action="" method="get">
     Id:
-    <input type="text" name="id">
-    <input type="submit" value="Submit">
+    <input type="text" name="id" id="idid">
+    <input type="button" value="Submit" onClick="getOrder(this.form)">
   </form>
+  <div id="new"></div>
 </body>
+
+<script>
+
+firstDraw();
+
+function getOrder(form) {
+  var id = document.getElementById("idid").value;
+  execReq('/order', id)
+  .then(data => {
+    console.log(data);
+    drawOrder(data);
+  });
+}
+
+function firstDraw() {
+  var tag = document.createElement("p");
+  var text = document.createTextNode("");
+  tag.appendChild(text);
+  var element = document.getElementById("new");
+  element.appendChild(tag);
+}
+
+function drawOrder(data) {
+  document.getElementById("new").innerHTML = '';
+  var tag = document.createElement("p");
+  var text = document.createTextNode(JSON.stringify(data, null, '\t'));
+  tag.appendChild(text);
+  var element = document.getElementById("new");
+  element.appendChild(tag);
+}
+
+async function execReq(url = '', id = '') {
+  const response = await fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'id': id
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'
+  });
+  return response.json();
+}
+
+</script>
 
 </html>
