@@ -1,0 +1,10 @@
+PS C:\Users\busla\Desktop\moe\pargrammirony\L0\vegeta-testing> vegeta attack -duration=5s -rate=100/s --targets=target.txt --output results.bin
+PS C:\Users\busla\Desktop\moe\pargrammirony\L0\vegeta-testing> vegeta report results.bin
+Requests      [total, rate, throughput]  500, 100.25, 100.23
+Duration      [total, attack, wait]      4.988615s, 4.9874831s, 1.1319ms
+Latencies     [mean, 50, 95, 99, max]    1.64351ms, 812.302µs, 5.994772ms, 16.89115ms, 33.9668ms
+Bytes In      [total, mean]              554000, 1108.00
+Bytes Out     [total, mean]              0, 0.00
+Success       [ratio]                    100.00%
+Status Codes  [code:count]               200:500
+Error Set:

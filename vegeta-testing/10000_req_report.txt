@@ -1,0 +1,11 @@
+PS C:\Users\busla\Desktop\moe\pargrammirony\L0\vegeta-testing> vegeta report results.bin
+Requests      [total, rate, throughput]  12206, 949.68, 615.81
+Duration      [total, attack, wait]      13.4912134s, 12.8527229s, 638.4905ms
+Latencies     [mean, 50, 95, 99, max]    8.918325304s, 10.326977817s, 11.456864943s, 12.081770152s, 12.7937049s
+Bytes In      [total, mean]              9205264, 754.16
+Bytes Out     [total, mean]              0, 0.00
+Success       [ratio]                    68.06%
+Status Codes  [code:count]               0:3898  200:8308
+Error Set:
+Post "http://localhost:1111/order": dial tcp 0.0.0.0:0->127.0.0.1:1111: bind: An operation on a socket could not be performed because the system lacked sufficient buffer space or because a queue was full.
+Post "http://localhost:1111/order": dial tcp 0.0.0.0:0->127.0.0.1:1111: connectex: No connection could be made because the target machine actively refused it.
