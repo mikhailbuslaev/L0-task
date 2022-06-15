@@ -104,5 +104,4 @@ func (p *Publisher) Run() {
 	
 		<-signalChan
 		fmt.Println("Received an interrupt, end publishing...")
-		time.Sleep(1*time.Second)
 }

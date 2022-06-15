@@ -161,14 +161,14 @@ func (s *Subscriber) Run() {
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println("Succesfully restore postgres cache")
+		fmt.Println("Succesfully restore postgres records")
 	}
 	// Restore csv cache
 	err = s.restoreFromFile()
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println("Succesfully restore csv cache")
+		fmt.Println("Succesfully restore csv records")
 	}
 
 	// Parse and append correct messages to cache

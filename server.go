@@ -44,8 +44,10 @@ func main() {
 		path := string(ctx.Path())
 		switch path {
 		case "/order":
+			// Handling order searching
 			getOrderHandler(ctx)
 		default:
+			// Handling search page
 			staticHandler(ctx)
 		}
 	}
