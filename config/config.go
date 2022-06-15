@@ -15,6 +15,7 @@ func Parse(any interface{}, configFile string) {
 
 	err = yaml.Unmarshal(buf, any)
 	if err != nil {
+		log.Println(err)
 		log.Fatalf("Cannot parse config")
 	}
 }

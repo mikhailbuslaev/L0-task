@@ -44,7 +44,7 @@ function drawOrder(data) {
   var text = document.createTextNode(JSON.stringify(data, null, '\t'));
   tag.appendChild(text);
   var element = document.getElementById("new");
-  element.appendChild(tag);
+  element.appendChild(tag, element.tag);
 }
 
 async function execReq(url = '', id = '') {

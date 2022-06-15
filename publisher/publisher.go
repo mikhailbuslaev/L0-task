@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"nats-subscriber/config"
 	stan "github.com/nats-io/stan.go"
 )
 
@@ -13,15 +14,12 @@ type Publisher struct {
 	Name string
 	Channel string
 	Cluster string
-	Timeout time.Duration
+	Timeout string
 }
 
 func New() *Publisher {
 	p := &Publisher{}
-	p.Name = "publisher"
-	p.Channel = "foo"
-	p.Cluster = "test-cluster"
-	p.Timeout = 20
+	config.Parse(p, "config/publisher.yaml")
 	return p
 }
 
@@ -96,7 +94,8 @@ func (p *Publisher) Run() {
 			"oof_shard": "1"
 		  }`))
 		  i++
-		  time.Sleep(p.Timeout*time.Second)
+		  timeout, _ := time.ParseDuration(p.Timeout)
+		  time.Sleep(timeout)
 	}
 }()
 		// Unsubscribe if receiving Ctrl+C interrupt
@@ -104,6 +103,6 @@ func (p *Publisher) Run() {
 		signal.Notify(signalChan, os.Interrupt)
 	
 		<-signalChan
-		
+
 		fmt.Println("Received an interrupt, end publishing...")
 }
