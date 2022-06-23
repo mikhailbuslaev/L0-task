@@ -1,6 +1,6 @@
 package main
 
-// We cant use map with concurrent writing (https://go.dev/doc/faq#atomic_maps)
+// We cant safety use map with concurrent writing
 // but we can make read/write queue with mutex
 import (
 	"fmt"

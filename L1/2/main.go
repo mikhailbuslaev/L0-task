@@ -14,6 +14,7 @@ func main() {
 	}
 
 	for range array {
+		//block main until goroutines writes
 		println(<-c)
 	}
 }

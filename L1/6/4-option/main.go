@@ -9,7 +9,7 @@ import (
 func listen(data chan int) {
 	fmt.Println("Listening goroutine running...")
 	for {
-		val, ok := <- data
+		val, ok := <- data// if channel close, !ok = true
 		if !ok {
 			fmt.Println("Listening goroutine closing...")
 			return
@@ -25,7 +25,7 @@ func publish(data chan int) {
 		data <- i
 	}
 	fmt.Println("Init goroutines close...")
-	close(data)
+	close(data) // for example we init channel closing here
 	fmt.Println("Publish goroutine closing...")
 }
 // If you already have used channels, you can stop goroutine via close(your channel) outside gourutine

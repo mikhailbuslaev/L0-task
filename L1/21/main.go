@@ -17,11 +17,11 @@ func (n *NormalVisitor) EatFood() {
 
 // Some visitors just need toilet, not food or drinks
 type ManWhoWantsToilet struct {
-	Piss()
+	VisitToilet()
 }
 
-func (m *ManWhoWantsToilet) Piss() {
-	fmt.Println("Pissing...")
+func (m *ManWhoWantsToilet) VisitToilet() {
+	fmt.Println("Visiting toilet...")
 }
 
 type ToiletToCafeAdapter struct {

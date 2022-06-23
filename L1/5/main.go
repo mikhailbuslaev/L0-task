@@ -6,7 +6,7 @@ import (
 	"math/rand"
 	"time"
 )
-
+// Continuous writing to data channel
 func write(data chan int, quit chan bool) {
 	for {
 		select {
@@ -19,7 +19,7 @@ func write(data chan int, quit chan bool) {
 		}
 	}
 }
-
+// Listennig data channel
 func listen(data chan int, quit chan bool) {
 	for {
 		select {
@@ -31,10 +31,11 @@ func listen(data chan int, quit chan bool) {
 		}
 	}
 }
-
+// handle safety quit for writer and listener
 func handleQuit(quit chan bool, timeout time.Duration) {
 	time.Sleep(timeout)
 	for {
+		//endless loop is safety here, because it finish after finish of writer and listener
 		quit <- true
 	}
 } 
@@ -44,7 +45,7 @@ func main() {
 	quit := make(chan bool)
 	var duration string
 	fmt.Print("Enter duration of work: ")
-	fmt.Scan(&duration)
+	fmt.Scan(&duration)//cmd scan
 	timeout, _ := time.ParseDuration(duration)
 
 	go handleQuit(quit, timeout)
