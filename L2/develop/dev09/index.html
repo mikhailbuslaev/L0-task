@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# profile: http://ogp.me/ns/profile#">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<link rel="stylesheet" href="https://cdn.daniweb.com/whitney/dist@v40/css/daniweb.min.css" type="text/css">
+
+<script>var dw_csrf_hash = '';</script>
+<script>var csrf_hash = '';</script>
+<script>
+    		    			window.is_desktop = window.innerWidth >= 992;
+    		    	</script>
+
+<script defer id="loadJQ" src="https://cdn.daniweb.com/jquery-3.6.0.min.js"></script>
+
+<script defer src="https://cdn.daniweb.com/whitney/dist@v40/js/bootstrap.bundle.min.js"></script>
+<script id="loadDWArticles" defer src="https://cdn.daniweb.com/whitney/js/articles/group0.v40.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.daniweb.com/whitney/fontawesome@v40/css/all.min.css" media="print" onload="this.media='all'; this.onload=null;">
+<noscript><link rel="stylesheet" href="https://cdn.daniweb.com/whitney/fontawesome@v40/css/all.min.css" type="text/css"></noscript>
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-98289-1"></script>
+<script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'UA-98289-1', {
+			'cookie_domain': 'www.daniweb.com',
+                    });
+        </script>
+
+<link rel="home" href="https://www.daniweb.com/">
+<link rel="search" href="https://www.daniweb.com/search/index">
+<title>http - Get the content of a web page (golang) | DaniWeb</title>
+<link rel="canonical" href="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang">
+<link rel="up" href="https://www.daniweb.com/programming/computer-science/code/_/14">
+
+<link rel="author" href="https://www.daniweb.com/members/19440/vegaseat">
+<meta name="author" content="vegaseat">
+
+<meta name="keywords" content="computer science,content,golang,http,webpage,content,web,page,golang,forum,community,discussion,message board,help,question,Q&A">
+<meta name="description" content="Reading the content of a web page with a given URL is pretty simple with Go. Here we defer the closing ...">
+<meta property="og:title" content="Get the content of a web page (golang)">
+<meta property="og:description" content="Reading the content of a web page with a given URL is pretty simple with Go. Here we defer the closing of the response body (at an early point, so we ...">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang">
+<link rel="image_src" type="image/png" href="https://static.daniweb.com/avatars/avatar19440.gif">
+<meta property="og:image" content="https://static.daniweb.com/avatars/avatar19440.gif">
+<meta name="twitter:image" content="https://static.daniweb.com/avatars/avatar19440.gif">
+<meta name="twitter:card" content="summary">
+<meta property="og:site_name" content="DaniWeb">
+<meta name="twitter:site" content="@DaniWeb">
+<meta name="twitter:creator" content="@DaniWeb">
+<meta name="twitter:via" content="DaniWeb">
+<meta name="twitter:url" content="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang">
+<meta name="twitter:title" content="Get the content of a web page (golang)">
+<meta name="twitter:description" content="Reading the content of a web page with a given URL is pretty simple with Go. Here we defer the closing of the response body (at an early point,">
+<link rel="amphtml" href="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang/amp">
+<link rel="alternate" type="application/rss+xml" title="Computer Science Forum" href="https://www.daniweb.com/rss/14">
+
+<script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+<script>
+	window.googletag = window.googletag || {cmd: []};
+    googletag.cmd.push(function() {
+    	
+    	if (window.innerWidth >= 768)
+    	{
+    		var leader_size;
+    		if (window.innerWidth >= 1020) { leader_size = [[980, 90], [970, 90], [728, 90], [970, 250], 'fluid', [980, 120], [750, 200], [750, 100]]; } else { leader_size = ['fluid', [728, 90]]; }
+
+            // Above the fold Billboard / Leaderboard on >= MD (class => container-ArticleLeaderboard)
+    		googletag.defineSlot('/86406173/ATFBillboard', leader_size, 'div-gpt-ad-1321481451196-0').addService(googletag.pubads());
+    		
+    		if (window.innerWidth >= 992)
+    		{
+    		    var rectangle_size;
+        		
+    			                    rectangle_size = [[300, 600], [300, 1050], [300, 250]];
+    			
+    			
+                    // Sidebar ad on >= LG (class => container-ArticleMediumRectangle)
+	    			googletag.defineSlot('/86406173/ArticleMediumRectangle', rectangle_size, 'div-gpt-ad-1321481451196-1').addService(googletag.pubads());
+    			    		}	    
+    	}
+    	else
+    	{
+
+            // Ad right below the first post on < MD (class => container-BottomLeaderboard)
+			googletag.defineSlot('/86406173/ArticleMediumRectangle', [[300, 600], [300, 250]], 'div-gpt-ad-1321481451196-3').addService(googletag.pubads());
+    	}        	
+
+		var bottom_size;
+		if (window.innerWidth >= 1400)
+        {
+            bottom_size = ['fluid', [728, 90], [300, 250]];
+        }
+        else
+        {
+            bottom_size = ['fluid', [300, 250]];
+        }
+
+    	
+        
+        		    
+
+        /*
+        if (window.innerWidth >= 768)
+        {
+            googletag.defineSlot('/86406173/BottomLeaderboard', leader_size, 'div-gpt-ad-1321481451196-4').addService(googletag.pubads());
+        }
+        */
+	        
+        googletag.pubads().setTargeting('Forum', ['programming','computer-science']);
+        googletag.pubads().setTargeting('Page', 'Articles');
+        googletag.pubads().set('adsense_channel_ids', '5271040121');        googletag.pubads().enableLazyLoad({
+            fetchMarginPercent: 150,
+            renderMarginPercent: 125,
+            mobileScaling: 1.2
+        });
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+    	
+    });
+    </script>
+
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+<div class="be-wrapper be-fixed-sidebar be-offcanvas-menu">
+<header>
+<nav class="navbar navbar-dark navbar-expand fixed-top">
+<div class="text-nowrap me-5">
+
+<a class="d-xxl-none me-2" href="#dw-sidebar" title="Toggle Menu" data-bs-toggle="offcanvas" role="button" aria-expanded="false" aria-controls="dw-sidebar">
+<i role="presentation" class="icon fas fa-bars align-middle dw-btn-icon text-white"></i>
+<span class="visually-hidden">Menu</span>
+</a>
+<a id="js-toggle-sidebar" class="d-none d-xxl-inline me-2" href="#" title="Toggle Menu" role="button" aria-expanded="false" aria-controls="dw-sidebar">
+<i role="presentation" class="icon fas fa-bars align-middle dw-btn-icon text-white"></i>
+<span class="visually-hidden">Menu</span>
+</a>
+
+<a href="/" class="navbar-brand align-middle">
+<span class="visually-hidden">DaniWeb</span>
+</a>
+</div>
+<div class="navbar-collapse d-flex flex-row-reverse">
+
+<div class="text-nowrap">
+<a href="/connect/profile/login?uri=%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang" role="button" class="js-signup-link btn btn-space btn-secondary btn-transparent">
+<i role="presentation" class="fas fa-sign-in-alt fa-fw"></i>Log In
+</a>
+<a href="/connect/profile/login/signup?uri=%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang" role="button" class="js-signup-link d-none d-sm-inline btn btn-space btn-dw-link">
+<i role="presentation" class="fas fa-user-plus fa-fw"></i>Sign Up
+</a>
+</div>
+<ul class="navbar-nav d-none d-xl-flex">
+<li class="nav-item me-2">
+<a role="button" class="nav-link" href="/articles/latest/recommended">
+Read
+</a>
+</li>
+<li class="nav-item me-2">
+<a role="button" class="nav-link" href="/community/contribute/14">
+Contribute
+</a>
+</li>
+</ul>
+
+<div id="dw-search-container" class="d-none d-xl-block w-100 me-5">
+<form action="/search/index" method="get" role="search" aria-label="Sitewide">
+<div class="input-group flex-nowrap">
+<span class="flex-fill">
+<label for="dw-site-search" class="visually-hidden">Search</label>
+<input id="dw-site-search" type="search" name="q" value="" data-forum-id="14" autocomplete="off" placeholder="Search or jump to &hellip;" class="form-control">
+</span>
+<button type="submit" class="btn rounded-pill rounded-start bg-white text-dark">
+<i role="presentation" class="fas dw-btn-icon fa-search"></i>
+<span class="visually-hidden">Search</span>
+</button>
+</div>
+</form>
+</div>
+</div>
+</nav>
+</header>
+<div id="dw-article" class="be-content" data-id="495192">
+<main>
+
+<div class="navbar navbar-light d-block be-sub-navigation py-2 dw-vertical-align">
+
+<nav aria-label="breadcrumb">
+<ol class="mb-0 breadcrumb" itemprop="breadcrumb" itemscope itemtype="https://schema.org/BreadcrumbList">
+<li class="breadcrumb-item d-none d-md-block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+<a href="/" itemprop="item" rel="up"><span itemprop="name">Home</span></a>
+<meta itemprop="position" content="1">
+</li>
+<li class="breadcrumb-item d-none d-md-block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+<a href="/programming/4" itemprop="item" rel="up">
+<span itemprop="name">
+Programming Forum </span>
+</a>
+<meta itemprop="position" content="2">
+</li>
+<li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+ <a href="/programming/computer-science/14" itemprop="item" rel="up">
+<span itemprop="name">
+Computer Science Forum </span>
+</a>
+<meta itemprop="position" content="3">
+</li>
+<li class="breadcrumb-item d-none d-md-block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+<a href="/programming/computer-science/code/_/14" itemprop="item" rel="up">
+<span itemprop="name">Code Snippet Repository</span>
+</a>
+<meta itemprop="position" content="4">
+</li>
+<li class="breadcrumb-item d-none d-md-block" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+<i role="presentation" class="fas fa-file-code fa-fw"></i>
+Reusable Code Snippet <meta itemprop="name" content="http - Get the content of a web page (golang)">
+<meta itemprop="position" content="5">
+</li>
+</ol>
+</nav>
+</div>
+<div class="d-none d-md-block dw-inject-bsa dw-protect-cls text-center bg-white">
+
+<div id="div-gpt-ad-1321481451196-0" class="container-ArticleLeaderboard">
+<script>
+                            if (window.innerWidth >= 768) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1321481451196-0'); }); }
+                    		</script>
+</div>
+
+</div>
+
+<article id="/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang" itemprop="mainEntity" itemscope itemtype="https://schema.org/SoftwareSourceCode">
+<meta itemprop="name" content="Get the content of a web page (golang)">
+<meta itemprop="interactivityType" content="active">
+<span itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+<link itemprop="url" href="https://static.daniweb.com/avatars/avatar19440.gif">
+<meta itemprop="height" content="80">
+<meta itemprop="width" content="80">
+</span>
+<span id="/welcome/contact" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+<meta itemprop="name" content="DaniWeb">
+<meta itemprop="url" content="https://www.daniweb.com/welcome/contact">
+<span itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+<link itemprop="url" href="https://static.daniweb.com/connect/logo.png">
+<meta itemprop="width" content="561">
+<meta itemprop="height" content="60">
+</span>
+</span>
+<meta itemprop="datePublished" content="2015-04-28T20:00:29+00:00">
+<meta itemprop="dateModified" content="2015-04-28T20:00:29+00:00">
+<meta itemprop="mainEntityOfPage" content="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang">
+
+<div class="border-bottom bg-white">
+<div class="main-content container">
+
+<h1 class="display-4" itemprop="headline">
+Get the content of a web page (golang) </h1>
+
+<div class="h5 mb-4 mb-xl-4 pb-4 pb-xl-4 border-bottom">
+<span class="me-3 text-nowrap">
+<i role="presentation" class="fas fa-archive fa-fw"></i>
+<time data-bs-toggle="popover" data-bs-content="Apr 28th, 2015 8:00 pm" datetime="2015-04-28T20:00:29+00:00">7 Years Ago</time>
+</span>
+<span class="me-3 text-nowrap" dir="ltr">
+<i role="presentation" class="fas fa-signature fa-fw"></i>
+<a href="/members/19440/vegaseat">vegaseat</a>
+</span>
+<span class="me-3 text-nowrap fw-bold">
+<i role="presentation" class="far fa-fw fa-thumbs-up"></i>
+0 <span class="visually-hidden">Tallied Votes</span>
+</span>
+<span class="me-3 text-nowrap">
+<i role="presentation" class="fas fa-eye fa-fw"></i>
+19K
+Views </span>
+<span class="text-nowrap" data-bs-toggle="tooltip" title="Share">
+<a href="#md-share" data-bs-toggle="modal" id="dw-share" data-article-id="495192" data-article-url="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang" data-url="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang">
+<i role="presentation" class="fas dw-btn-icon fa-share-alt"></i>
+<span class="visually-hidden">Share</span>
+</a>
+</span>
+</div>
+
+<div class="row">
+<div class="col dw-col-container">
+
+
+
+<div id="post2166632" data-id="2166632" class="dw-post dw-editorial">
+
+
+<div class="card dw-forum-post">
+
+
+<link itemprop="url" href="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang#post2166632">
+<div class="card-body clearfix">
+
+<div class="dw-post-body clearfix">
+<div itemprop="text">
+<!-- google_ad_section_start -->
+<div class="js-message-parsed"><p>Reading the content of a web page with a given URL is pretty simple with Go. Here we defer the closing of the response body (at an early point, so we won't later forget) until the program exits.</p>
+</div>
+<!-- google_ad_section_end -->
+</div>
+</div>
+
+<div class="my-4">
+<span itemprop="keywords">
+<a href="/tags/content" rel="tag" class="badge btn-dw-link mb-1"><i role="presentation" class="fas fa-tag fa-fw"></i>content</a>
+<a href="/tags/golang" rel="tag" class="badge btn-dw-link mb-1"><i role="presentation" class="fas fa-tag fa-fw"></i>golang</a>
+<a href="/tags/http" rel="tag" class="badge btn-dw-link mb-1"><i role="presentation" class="fas fa-tag fa-fw"></i>http</a>
+<a href="/tags/webpage" rel="tag" class="badge btn-dw-link mb-1"><i role="presentation" class="fas fa-tag fa-fw"></i>webpage</a>
+</span>
+</div>
+
+<div class="btn-group" role="group" data-bs-toggle="tooltip" title="Votes">
+
+<button aria-label="Vote Up" class="dw-upvote btn btn-lg rounded-pill rounded-end fw-bolder btn-secondary" disabled data-vote="1">
+<i role="presentation" class="far fa-fw fa-thumbs-up"></i>
+<span>0</span>
+</button>
+<button aria-label="Vote Down" class="dw-downvote btn btn-lg rounded-pill rounded-start fw-bolder btn-secondary" disabled data-vote="-1">
+<i role="presentation" class="far fa-fw fa-thumbs-down"></i>
+<span>0</span>
+</button>
+</div>
+<div class="btn-group dw-card-hidden float-end" role="group">
+
+<div data-bs-toggle="tooltip" title="Share">
+<button class="btn btn-lg dw-card-hidden-item shadow-none" data-bs-toggle="modal" data-bs-target="#md-share" id="dw-share-2166632" data-article-id="495192" data-article-url="https://www.daniweb.com/programming/computer-science/code/495192/get-the-content-of-a-web-page-golang" data-url="https://www.daniweb.com/posts/jump/2166632">
+<i role="presentation" class="fas fa-share-alt"></i>
+<span class="visually-hidden">Share</span>
+</button>
+</div>
+
+</div>
+</div> 
+
+</div>
+
+
+<div class="dw-comments" hidden></div>
+
+</div>
+
+<div>
+<meta itemprop="codeSampleType" content="code snippet">
+<div class="mt-5">
+<pre itemprop="text" class="line-numbers dw-forum-post language-clike"><code class="line-numbers language-clike">// http_get101.go
+//
+// get the contents of a web page with given URL
+//
+// for imported package info see ...
+// http://golang.org/pkg/fmt/
+// http://golang.org/pkg/io/ioutil/
+// http://golang.org/pkg/net/http/
+//
+// tested with Go version 1.4.2   by vegaseat  28apr2015
+
+package main
+
+import (
+	&quot;fmt&quot;
+	&quot;io/ioutil&quot;
+	&quot;net/http&quot;
+)
+
+func main() {
+	url := &quot;http://tour.golang.org/welcome/1&quot;
+	fmt.Printf(&quot;HTML code of %s ...\n&quot;, url)
+	resp, err := http.Get(url)
+	// handle the error if there is one
+	if err != nil {
+		panic(err)
+	}
+	// do this now so it won't be forgotten
+	defer resp.Body.Close()
+	// reads html as a slice of bytes
+	html, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	// show the HTML code as a string %s
+	fmt.Printf(&quot;%s\n&quot;, html)
+
+}
+
+/* result ...
+HTML code of http://tour.golang.org/welcome/1 ...
+&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; ng-app=&quot;tour&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;A Tour of Go&lt;/title&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no&quot;&gt;
+    &lt;meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot;&gt;
+    &lt;meta name=&quot;mobile-web-app-capable&quot; content=&quot;yes&quot;&gt;
+    &lt;link rel=&quot;shortcut icon&quot; sizes=&quot;196x196&quot; href=&quot;/static/img/favicon.ico&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/css/app.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;/static/lib/codemirror/lib/codemirror.css&quot;&gt;
+    &lt;link href='//fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+var _gaq = _gaq || [];
+_gaq.push([&quot;_setAccount&quot;, &quot;UA-11222381-5&quot;]);
+_gaq.push([&quot;b._setAccount&quot;, &quot;UA-49880327-6&quot;]);
+window.trackPageview = function() {
+  _gaq.push([&quot;_trackPageview&quot;, location.pathname+location.hash]);
+  _gaq.push([&quot;b._trackPageview&quot;, location.pathname+location.hash]);
+};
+window.trackPageview();
+window.trackEvent = function(category, action, opt_label, opt_value, opt_noninteraction) {
+  _gaq.push([&quot;_trackEvent&quot;, category, action, opt_label, opt_value, opt_noninteraction]);
+  _gaq.push([&quot;b._trackEvent&quot;, category, action, opt_label, opt_value, opt_noninteraction]);
+};
+&lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div class=&quot;bar top-bar&quot;&gt;
+        &lt;a class=&quot;left logo&quot; href=&quot;/list&quot;&gt;A Tour of Go&lt;/a&gt;
+        &lt;div table-of-contents-button=&quot;.toc&quot;&gt;&lt;/div&gt;
+        &lt;div feedback-button&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div table-of-contents&gt;&lt;/div&gt;
+
+    &lt;div ng-view ng-cloak class=&quot;ng-cloak&quot;&gt;&lt;/div&gt;
+
+    &lt;script src=&quot;/script.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+    window.transport = HTTPTransport();
+    window.socketAddr = &quot;&quot;;
+
+    function highlight(selector) {
+        var speed = 50;
+        var obj = $(selector).stop(true, true)
+        for (var i = 0; i &lt; 5; i++) {
+            obj.addClass(&quot;highlight&quot;, speed)
+            obj.delay(speed)
+            obj.removeClass(&quot;highlight&quot;, speed)
+        }
+    }
+
+    function highlightAndClick(selector) {
+        highlight(selector);
+        setTimeout(function() {
+            $(selector)[0].click()
+        }, 750);
+    }
+
+    function click(selector) {
+        $(selector)[0].click();
+    }
+    &lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+(function() {
+  var ga = document.createElement(&quot;script&quot;); ga.type = &quot;text/javascript&quot;; ga.async = true;
+  ga.src = (&quot;https:&quot; == document.location.protocol ? &quot;https://ssl&quot; : &quot;http://www&quot;) + &quot;.google-analytics.com/ga.js&quot;;
+  var s = document.getElementsByTagName(&quot;script&quot;)[0]; s.parentNode.insertBefore(ga, s);
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;
+*/</code></pre>
+</div>
+</div>
+</div>
+<aside class="col-lg-auto dw-col-sidebar">
+
+<div class="mt-5 mt-lg-0 mb-4 card card-border">
+<div class="card-header text-muted text-uppercase">
+<i role="presentation" class="fas fa-signature fa-fw"></i>
+About the Author
+</div>
+<div class="card-body">
+<div itemprop="author" itemscope itemtype="https://schema.org/Person" class="mb-3 pb-3 border-bottom">
+<div class="d-flex flex-row">
+<div class="position-relative">
+<div>
+<span class="dw-has-online">
+<a href="/members/19440/vegaseat">
+<img class="img-thumbnail rounded-circle" src="//static.daniweb.com/avatars/avatar19440.gif" width="60" height="60" alt="Member Avatar">
+</a>
+</span>
+</div>
+</div>
+<div class="ms-2">
+<span>
+<span class="lead align-middle">
+<a data-bs-toggle="popover" data-bs-content="8,227 posts since Oct 2004" href="/members/19440/vegaseat" itemprop="url">
+<span dir="ltr" itemprop="name">
+vegaseat </span>
+</a>
+</span>
+<span class="badge bg-white text-black border align-middle" data-bs-toggle="tooltip" title="Member Reputation Points"><i role="presentation" class="fas fa-fw fa-trophy"></i>1,735</span>
+</span>
+<span class="text-muted d-block white-space-normal">
+<span itemprop="jobTitle" class="me-1 small align-middle">
+DaniWeb's Hypocrite </span>
+
+<span data-bs-toggle="tooltip" title="Team Colleague">
+<i role="presentation" class="fas fa-award dw-btn-icon"></i>
+<span class="visually-hidden" itemprop="award">Team Colleague</span>
+</span>
+</span>
+</div>
+</div>
+</div>
+<p>Scientist</p>
+</div>
+</div>
+<div class="sticky-top">
+
+<div class="d-none d-lg-block text-center mb-4">
+<div id="div-gpt-ad-1321481451196-1" class="container-ArticleMediumRectangle">
+<script>
+                                if (window.innerWidth >= 992) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1321481451196-1'); }); }
+                                </script>
+</div>
+</div>
+<div class="dw-social-icons" data-id="495192">
+<span class="d-inline-block dw-social btn-group btn-space mb-0" data-platform="facebook">
+<button class="btn btn-color btn-social btn-facebook" type="button" data-url="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.daniweb.com%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang">
+<i role="presentation" class="icon fab fa-facebook-f dw-btn-icon"></i>
+<span class="visually-hidden">Facebook</span>
+</button>
+<button class="btn btn-secondary" type="button" data-url="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.daniweb.com%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang">Like</button>
+</span>
+<span class="d-inline-block dw-social btn-group btn-space mb-0" data-platform="twitter">
+<button class="btn btn-color btn-social btn-twitter" type="button" data-url="https://twitter.com/intent/tweet?text=Get+the+content+of+a+web+page+%28golang%29&amp;via=daniweb&amp;url=https%3A%2F%2Fwww.daniweb.com%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang">
+<i role="presentation" class="icon fab fa-twitter dw-btn-icon"></i>
+<span class="visually-hidden">Twitter</span>
+</button>
+<button class="btn btn-secondary" type="button" data-url="https://twitter.com/intent/tweet?text=Get+the+content+of+a+web+page+%28golang%29&amp;via=daniweb&amp;url=https%3A%2F%2Fwww.daniweb.com%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang">Tweet</button>
+</span>
+</div>
+</div>
+</aside>
+</div>
+
+</div>
+</div>
+<div class="main-content container-fluid container-xxl">
+<div class="row">
+<div class="col dw-col-container">
+
+<div class="d-md-none text-center mb-4">
+<div id="div-gpt-ad-1321481451196-3" class="container-BottomLeaderboard">
+<script>
+                                        				if (window.innerWidth < 768) { googletag.cmd.push(function() { googletag.display('div-gpt-ad-1321481451196-3'); }); }
+                                        				</script>
+</div>
+</div>
+
+<div id="js-replies" class="dw-replies position-relative pt-1">
+
+</div>
+
+<a class="d-none d-lg-block jumbotron bg-dark bg-opacity-10 my-4 p-5 rounded text-center text-muted collapsed" href="#dw-reply-body" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="dw-reply-body">
+<i role="presentation" class="fas fa-5x fa-fw fa-comment-alt-plus"></i>
+<span class="d-block display-4">Be the first to reply</span>
+</a>
+<div class="card card-border my-5">
+<div class="card-body p-6">
+<div class="fs-4 mb-2">
+Be a part of the DaniWeb community
+</div>
+<p class="fs-5">
+We're a friendly, industry-focused community of developers, IT pros, digital marketers,
+and technology enthusiasts meeting, learning, and sharing knowledge.
+</p>
+<div class="mt-2">
+<a class="js-signup-link btn btn-dw btn-lg" href="/connect/profile/login/signup?uri=%2Fprogramming%2Fcomputer-science%2Fcode%2F495192%2Fget-the-content-of-a-web-page-golang">
+<i role="presentation" class="fas fa-user-plus fa-fw"></i>
+Sign Up &mdash; It's Free!
+</a>
+</div>
+</div>
+</div>
+</div>
+
+<aside class="col-lg-auto dw-col-sidebar">
+
+
+<div class="sticky-top">
+<div class="h3">Related Topics</div>
+<ul class="list-unstyled">
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Is there a way to load a page for a minute and then fetch content of a page.
+
+I am using 
+
+    new DOMDocument
+
+method to fetch content from a page which is working fine. Problem is that i want to load a page for a minute because the page from ..." href="/programming/web-development/threads/478160/web-page-scraping">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="burhanahmed92">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Web Page Scraping</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+11 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I don&#39;t know too much about web development or making web pages although I can make simple html pages that have forms and so forth. I can do a little bit of javascript and css so that I can give the page some functionality and some type of design. However, ..." href="/programming/software-development/threads/503247/web-page-forms-that-will-email-the-user-a-message-from-the-information">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="TheFearful">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Web Page Forms that will email the user a message from the information</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+2 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Hi,
+
+I am trying to develop an efficient algorithm for maximum subsequence sum. But I am stuck.
+
+I want to return the start and the end of the subsequence producing the maximum sum.
+
+Example Array Contains...
+
+-2,11,-4,13,-5,-2
+
+Now my algorithm works as follow.
+
+[CODE]
+
+MSS(Array[],N)//Where N is the number of ..." href="/programming/computer-science/threads/322047/algorithm-for-maximum-subsequence-sum">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="shahab.burki">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Algorithm for Maximum Subsequence Sum</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+4 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I&#39;m in the beginning phases of developing a website. I want to be able to limit the amount of printing of web pages of circulars. These will be in an image format and usually consist of between 2 and 16 web pages. The circulars change each week.
+
+Is there a ..." href="/digital-media/ui-ux-design/threads/479200/limit-printing-of-web-page">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/4/member1077367.png" width="15" height="15" alt="Member Avatar" title="webmeat">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Limit Printing of Web Page</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+10 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I have prepared web site in google blog spot. Done site map and google tools set .Also create bing site map. When I am schercing in google money from out sourcing which not showing properly but in bingit is showing properly.
+Pls can you help how to solve this problem." href="/digital-media/ui-ux-design/threads/490040/web-page-not-found-in-google-page-properly">
+<span class="text-nowrap me-1">
+ <img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="khairbabu61">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Web page not found in google page properly</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+3 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Is computer programming worth it?  It seems like you have to spend a LOT of time learning a new language (employers in California are now asking for 4 years of professional experience), use it for a time, then watch it come obsolete and take a lower paying job so as ..." href="/programming/computer-science/threads/198105/is-computer-programming-worth-it">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="darkphotn">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Is computer programming worth it?</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+6 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="A handy code that brings up a password window to keep others off of the web pages you choose." href="/digital-media/ui-ux-design/code/216916/password-protect-your-web-page">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/avatar158780.gif" width="15" height="15" alt="Member Avatar" title="Hosmer23">
+ <i role="note" class="fas fa-file-code text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Reusable Code Snippet"></i>
+</span>
+<span>
+<span class="me-1">Password Protect Your Web Page</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+29 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Dear
+
+I am pasha from (Bangalore)India, i have a query
+
+In a web page how can i allow a user to write tetimonal online and it should be veiwed by everyone..means that should be present in feedback page...as users post their comments that should go adding on the web page ..." href="/digital-media/ui-ux-design/threads/483311/post-content-webpage">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="khizer03">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">post content webpage</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+4 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I wanted to know if there was a difference, if there is a difference between computer  information science and computer science. I started as a computer engineering student but found out there was hardly any programming involved, so I decided to take on software engineering, Since my school has no ..." href="/programming/computer-science/threads/74177/computer-information-science-vs-computer-science">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/avatar141090.gif" width="15" height="15" alt="Member Avatar" title="WhYuLoOkIn">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Computer Information Science vs. Computer Science</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+7 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Use Google&#39;s modern Go language (aka. golang) to convert a denary number (base 10) to a roman numeral.  Just a good exercise to explore Go&#39;s map, slice, sort and for loop features.  
+
+Note that in Go the **:=** is shorthand for assigning a type (by inference) and a value to ..." href="/programming/computer-science/code/495059/denary-number-to-roman-numerals-golang">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/avatar19440.gif" width="15" height="15" alt="Member Avatar" title="vegaseat">
+<i role="note" class="fas fa-file-code text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Reusable Code Snippet"></i>
+</span>
+<span>
+<span class="me-1">Denary number to roman numerals (golang)</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+0 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I need to ask question.  I am sure it is easy once I figured it out or someone on here points me in the right direction. 
+
+What I am trying to do is keep the header fixed and the parallax image at a default state is as it appears when ..." href="/digital-media/ui-ux-design/threads/446539/looking-for-direction-on-my-portfolio-page">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/fb/1432537643.jpg" width="15" height="15" alt="Member Avatar" title="dlmagers">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+ </span>
+<span>
+<span class="me-1">Looking for direction on my Portfolio page</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+4 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Im making a program the that uses wild cards on files example /home/My*/n?w/*txt im trying to make a binary tree of paths because base on the example the My* can be MyDocu MyHome etc, at the n?w can be new naw etc and get all the txt files i dont ..." href="/programming/computer-science/threads/374884/wildcard-help">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="anjoz">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Wildcard help</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+4 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Hi Evryone.
+
+I&#39;m new to this group , this being my first post.
+
+I have a query which if sorted out could benefit allot. I have searched bt couldnt come to a solution. I just need a direction and a say that &quot;[B] whatever i&#39;m proposing to do is FEASIBLE&quot;[/B] ..." href="/digital-media/ui-ux-design/threads/492750/linking-excel-datasheet-values-with-specific-webpage-columns">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="Rupinder_1">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">linking excel datasheet values with specific webpage columns</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+2 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Hi All,
+
+I have a problem with my web page. I&#39;m floating some content to the left so the image below can move up to the right. The content and image are contained in a div with a height set to 100%. When I remove the height or decrease it, ..." href="/digital-media/ui-ux-design/threads/478314/gap-at-bottom-of-page-where-elements-floated-out-of">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/3/member958344.jpg" width="15" height="15" alt="Member Avatar" title="Tinnin">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Gap at bottom of page where elements floated out of</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+3 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I&#39;ll keep the story short here but to sum things up:
+
+I have always liked computers. Hardware has always been my thing. I have my own custom built desktop and love changing and messing with it every day. I also work (part time) as an IT guy for small business. ..." href="/programming/computer-science/threads/442411/not-sure-if-i-m-ready-for-a-real-cs-job">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="rmbrown09">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Not Sure If I'm Ready For A Real CS Job</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+2 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Hi,
+
+I have a #header class and a #menu class.
+
+
+    &lt;body&gt; 
+    &lt;div id=&quot;page&quot;&gt;
+         &lt;header id=&quot;masthead&quot;&gt;
+             &lt;hgroup&gt;
+               &lt;h1 class=&quot;site-title&quot;&gt;
+                 &lt;a href=&quot;#&quot; &gt;Demo&lt;/a&gt;
+               &lt;/h1&gt;
+             &lt;/hgroup&gt;
+             &lt;nav class=&quot;site-navigation&quot;&gt;
+               &lt;h1 class=&quot;menu-text&quot;&gt;
+               &lt;/h1&gt;
+               &lt;div class=&quot;menu-text skip-link&quot;&gt;
+                 &lt;a href=&quot;#content&quot;&gt;Home&lt;/a&gt;
+               &lt;/div&gt;
+             &lt;/nav&gt;&lt;!-- .site-navigation .main-navigation --&gt;
+         &lt;/header&gt;&lt;!-- #masthead .site-header --&gt;
+         &lt;div id=&quot;primary&quot; class=&quot;content-area&quot;&gt;
+           &amp;lt;div id=&quot;primary&quot; class=&quot;content-area&quot;&amp;gt;
+           &lt;div id=&quot;content&quot; ..." href="/digital-media/ui-ux-design/threads/479675/allowing-a-menubar-to-flow-out-of-it-s-div-container-full-page-width">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/2/member555422.jpg" width="15" height="15" alt="Member Avatar" title="davecoventry">
+<i role="note" class="fas fa-check-circle text-success dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Answered Question"></i>
+</span>
+<span>
+<span class="me-1">Allowing a menubar to flow out of it's div container full page width</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+6 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I want to write a program that do this:
+It should receive the URL (Wikipedia &#39;s URL) from input and download that web page
+And read the content of that page and save it into a file
+please help me
+Thanks" href="/programming/software-development/threads/478768/read-the-content-of-web-page">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="aseeman">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">read the content of web page</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+2 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Hi Folks! This is probably an easy one for most of you php people :-)
+I&#39;ve got a PHP form that&#39;s working fine, yet after I SEND the form, it goes to a web page with a &quot;Thank You&quot; message on it (ala the php {print} command), ok... what I ..." href="/programming/web-development/threads/108090/add-a-link-into-php-web-page-how-to">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="ZenMartian">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">Add a Link into PHP web page...How To??</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+6 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="Hi All web experts,
+
+I have a Archive file folder, and it have few categories which is divided in years, and the files are named as month-date (eg. 07-26.pdf). There are old scanned documents mostly in PDFs, and doc files.These are available in a shared folder on our file server. ..." href="/digital-media/ui-ux-design/threads/480097/files-and-folder-listed-in-html-page">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/connect/images/anonymous_small.png" width="15" height="15" alt="Member Avatar" title="wrathyimp">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+ <span>
+<span class="me-1">Files and Folder listed in HTML page</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+9 </span>
+</span>
+</a>
+</li>
+<li class="mb-1">
+<a class="link-dark d-flex align-items-stretch flex-row" title="I finished an excellent lesson in html and now how I can apply what I learned in building a simple Web page?" href="/digital-media/ui-ux-design/threads/490312/how-can-i-build-a-web-page">
+<span class="text-nowrap me-1">
+<img loading="lazy" class="rounded-circle dw-btn-icon-lg align-middle" src="//static.daniweb.com/cdn-cgi/image/w=15,h=15,fit=scale-down,f=auto,anim=false,sharpen=1,metadata=none/avatars/4/member1118522.jpg" width="15" height="15" alt="Member Avatar" title="omarabed">
+<i role="note" class="fas fa-comment-alt-dots text-dark dw-btn-icon-lg align-middle" data-bs-toggle="tooltip" title="Discussion / Question"></i>
+</span>
+<span>
+<span class="me-1">How can I build a Web page ?</span>
+<span class="fw-bold small" data-bs-toggle="tooltip" title="Replies">
+8 </span>
+</span>
+</a>
+</li>
+</ul>
+<div class="mt-6">
+<div class="h5">Not what you need?</div>
+<p>
+Reach out to all the awesome people in our computer science community by starting your own topic.
+We equally welcome both specific questions as well as open-ended discussions.
+</p>
+<a href="/community/contribute/14" class="btn btn-dw-link"><i role="presentation" class="fas fa-edit fa-fw"></i>Start New Topic</a>
+</div>
+
+<div class="mt-5">
+<a href="https://www.daniweb.com/rss/14" class="btn btn-rss btn-sm"><i role="presentation" class="fas fa-rss fa-fw"></i>Topics Feed</a>
+</div>
+</div>
+</aside>
+
+</div>
+</div>
+</article>
+</main>
+<div id="js-quick-reply" class="container fixed-bottom sticky-top">
+<div class="card dw-forum-post" id="dw-quick-reply">
+<a class="d-block clearfix card-header dw-header btn-dw btn-lg fw-bold collapsed" href="#dw-reply-body" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="dw-reply-body">
+<span class="d-block position-relative">
+<span class="d-block position-absolute w-100">
+<span class="close md-close dw-btn-close dw-reply-body dw-collapsed-display">
+<i role="presentation" class="far fa-window-minimize"></i>
+</span>
+</span>
+<span class="d-block text-center">
+<i role="presentation" class="fas fa-fw fa-comment-alt-plus"></i>
+Reply to this Topic
+</span>
+</span>
+</a>
+<div id="dw-reply-body" class="js-reply-container dw-reply-body card-body collapse overflow-hidden p-0">
+<div class="py-4 px-3">
+<form action="https://www.daniweb.com/members/join" data-id="oauth" id="js-reply-form" method="post" accept-charset="utf-8">
+<input type="hidden" name="referer" value="programming/computer-science/code/495192/get-the-content-of-a-web-page-golang">
+
+<div class="alert alert-warning alert-icon" role="alert">
+<div class="icon"><i role="presentation" class="fas fa-exclamation-triangle dw-btn-icon"></i></div>
+<div class="message">
+<strong>This topic is old!</strong>
+No one has contributed to this discussion in over 7 years.
+Are you sure you have something valuable to add to revive the existing conversation?
+Consider <a href="/community/contribute/14/content+golang+http+webpage">starting a new topic</a> instead.
+Otherwise, please be thoughtful, detailed and courteous, and adhere to our <a href="/welcome/rules">posting rules</a>.
+</div>
+</div>
+<div>
+<div class="form-row row">
+<div class="
+            	    				col-12
+        		        	">
+
+<div class="form-group mb-4">
+
+
+<div id="DANI59c57d45cb64c744998b2bbd3cceb18a" class="js-editor-container">
+<div class="tab-container">
+<ul class="nav nav-tabs" role="tablist">
+<li class="nav-item">
+<a class="js-editor-tab nav-link active" href="#dw-editor-DANI59c57d45cb64c744998b2bbd3cceb18a" aria-controls="dw-editor-DANI59c57d45cb64c744998b2bbd3cceb18a" data-bs-toggle="tab" role="tab" aria-selected="true">
+<i role="presentation" class="fas fa-fw fa-pencil-alt"></i>
+Edit
+</a>
+</li>
+<li class="nav-item">
+<a class="js-preview-tab nav-link" href="#dw-preview-DANI59c57d45cb64c744998b2bbd3cceb18a" aria-controls="dw-preview-DANI59c57d45cb64c744998b2bbd3cceb18a" data-bs-toggle="tab" role="tab" aria-selected="false">
+<i role="presentation" class="fas fa-fw fa-glasses"></i>
+Preview
+</a>
+</li>
+</ul>
+</div>
+<div class="tab-content mt-4">
+
+<div id="dw-editor-DANI59c57d45cb64c744998b2bbd3cceb18a" class="tab-pane active show" role="tabpanel">
+<div class="form-group mb-4">
+<label for="js-message-DANI59c57d45cb64c744998b2bbd3cceb18a" class="form-label visually-hidden">Message</label>
+<div class="btn-toolbar mb-2" role="toolbar">
+<div class="btn-group btn-group-sm me-2" role="group">
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-bold" title="Bold"><i role="presentation" class="fas fa-bold dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-italic" title="Italic"><i role="presentation" class="fas fa-italic dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-code" title="Code Block"><i role="presentation" class="fas fa-code dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-inline-code" title="Inline Code"><i role="presentation" class="fas fa-terminal dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-link" title="Link"><i role="presentation" class="fas fa-link dw-btn-icon"></i></a>
+</div>
+<div class="btn-group btn-group-sm me-2" role="group">
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-quote" title="Quote"><i role="presentation" class="fas fa-quote-right dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-heading" title="Heading">H1</a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-sub-heading" title="Subheading">H2</a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-numbered-list" title="Numbered List"><i role="presentation" class="fas fa-list-ol dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-bulleted-list" title="Bulleted List"><i role="presentation" class="fas fa-list-ul dw-btn-icon"></i></a>
+</div>
+<div class="btn-group btn-group-sm" role="group">
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-undo" title="Undo"><i role="presentation" class="fas fa-undo dw-btn-icon"></i></a>
+<a href="#" tabindex="-1" data-bs-toggle="tooltip" class="btn btn-secondary js-redo" title="Redo"><i role="presentation" class="fas fa-redo dw-btn-icon"></i></a>
+<a href="/welcome/syntax" data-bs-toggle="tooltip" class="btn btn-secondary" title="Help"><i role="presentation" class="fas fa-question-circle dw-btn-icon"></i></a>
+</div>
+</div>
+<div class="js-errors">
+</div>
+<div id="js-message-DANI59c57d45cb64c744998b2bbd3cceb18a" class="js-codemirror">
+<textarea rows="5" cols="80" name="message" class="form-control"></textarea>
+</div>
+</div>
+</div>
+
+<div id="dw-preview-DANI59c57d45cb64c744998b2bbd3cceb18a" class="tab-pane" role="tabpanel">
+<div class="dw-replies position-relative">
+<div class="js-show-preview pt-2"></div>
+</div>
+</div>
+</div>
+</div>
+
+<script id="buildCM">
+
+    function build_cm_DANI59c57d45cb64c744998b2bbd3cceb18a()
+    {
+        window.myEditor_DANI59c57d45cb64c744998b2bbd3cceb18a = window.createMarkdownEditor($("#js-message-DANI59c57d45cb64c744998b2bbd3cceb18a"));
+        window.myEditor_DANI59c57d45cb64c744998b2bbd3cceb18a.focus();
+
+        // Code editor (for guests)
+        if ($('#js-insert-code-snippet').length > 0 && $('#js-snippet-block').find('.cm-editor').length == 0) {
+            window.myCodeEditor = window.createCodeEditor($("#js-snippet-block"));
+        }
+
+        
+    }
+
+            loadJQ.addEventListener('load', function () {
+    
+        $(function() {
+
+
+            <!-- CodeMirror -->
+
+            <!-- Start assuming CM is loaded -->
+
+            
+                <!-- CM script required -->
+
+                
+                    <!-- Require click before loading -->
+
+                    $('#DANI59c57d45cb64c744998b2bbd3cceb18a').one('click', function() {
+
+                
+                        if ($('#js-editor-css').length == 0)
+                        {
+                            $('head').append('<link id="js-editor-css" rel="stylesheet" href="https://cdn.daniweb.com/whitney/editor.v40.min.css" type="text/css">');
+
+                            $.ajax({
+                                url: 'https://cdn.daniweb.com/whitney/codemirror.v40.min.js',
+                                dataType: 'script',
+                                cache: true,
+                                success: function() {
+
+            
+            <!-- End assuming CM is loaded -->
+
+
+
+
+
+                                    build_cm_DANI59c57d45cb64c744998b2bbd3cceb18a();
+
+
+
+
+
+
+
+            <!-- Start assuming CM is loaded -->
+
+            
+                                }
+                            });
+                        }
+                        else
+                        {
+                            build_cm_DANI59c57d45cb64c744998b2bbd3cceb18a();
+                        }
+
+
+
+                                    });
+                
+
+
+
+            
+            <!-- End assuming CM is loaded -->
+
+        });
+
+            });
+    
+</script>
+
+</div>
+</div>
+</div>
+<div class="text-center">
+<input type="hidden" name="article_id" value="495192">
+<button type="submit" name="reply" form="js-reply-form" accesskey="S" class="btn btn-primary btn-lg btn-dw">
+Post Reply
+</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script>
+loadJQ.addEventListener('load', function () {
+    $(document).ready(function() {
+    	if (window.innerWidth < 992)
+    	{
+    		$('#dw-reply-body').collapse('show');
+    	}
+    });
+});
+</script>
+
+<div class="modal fade colored-header colored-header-primary" id="md-image" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-lg"></div>
+</div>
+
+<div class="modal fade" id="md-bad-link" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body">
+<div id="js-load-modal" class="text-center">
+<i role="presentation" class="fa-4x mb-4 fas fa-external-link-alt"></i>
+<div class="h4">Broken Link</div>
+<div id="js-bad-link-url" class="mb-4 text-truncate"></div>
+<p>
+<strong>You're trying to visit a URL that doesn't currently exist on the web.</strong>
+Most likely, a member posted a link a long time ago to a web page that has since been removed.
+It's also possible that there was a typo when posting the URL.
+We redirect you to this notice instead of stripping out the link to preserve the integrity of the post.
+</p>
+<div class="mt-5">
+<a href="#" class="btn btn-lg btn-primary btn-space mb-2" data-bs-dismiss="modal">Go Back to the Post</a>
+<a id="js-bad-link-button" href="#" class="btn btn-lg btn-secondary btn-space mb-2" rel="nofollow">
+ <i role="presentation" class="fas fa-fw fa-external-link-alt"></i>
+Continue Anyways
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade colored-header colored-header-primary" id="md-share" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header modal-header-colored">
+<h3 class="modal-title">Share Post</h3>
+<button class="btn btn-lg text-white" type="button" data-bs-dismiss="modal" aria-label="Close">
+<i role="presentation" class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<div class="form-group mb-4">
+<label class="form-label">Permanent Link</label>
+<div class="input-group input-group-sm">
+<div class="input-group-text"><i role="presentation" class="fas fa-link dw-btn-icon"></i></div>
+<input type="text" class="form-control" value="https://www.daniweb.com/">
+</div>
+</div>
+<div class="dw-social-icons" data-id="0">
+<div class="dw-social btn-group btn-space" data-platform="facebook">
+<button title="Facebook" class="btn btn-color btn-social btn-facebook" type="button" data-url="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.daniweb.com%2F">
+<i role="presentation" class="icon fab fa-facebook-f dw-btn-icon"></i>
+<span class="visually-hidden">Facebook</span>
+</button>
+<button class="btn btn-secondary" type="button" data-url="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.daniweb.com%2F">Like</button>
+</div>
+<div class="dw-social btn-group btn-space" data-platform="twitter">
+<button title="Twitter" class="btn btn-color btn-social btn-twitter" type="button" data-url="https://twitter.com/intent/tweet?via=daniweb&amp;url=https%3A%2F%2Fwww.daniweb.com%2F">
+<i role="presentation" class="icon fab fa-twitter dw-btn-icon"></i>
+<span class="visually-hidden">Twitter</span>
+</button>
+<button class="btn btn-secondary" type="button" data-url="https://twitter.com/intent/tweet?via=daniweb&amp;url=https%3A%2F%2Fwww.daniweb.com%2F">Tweet</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<div id="js-insert-code" class="modal fade colored-header colored-header-primary" tabindex="-1" role="dialog">
+<div class="modal-dialog modal-xl">
+<div class="modal-content">
+<div class="modal-header modal-header-colored">
+<h3 class="modal-title">Insert Code Block</h3>
+<button class="btn btn-lg text-white" type="button" data-bs-dismiss="modal" aria-label="Close">
+<i role="presentation" class="fas fa-times"></i>
+</button>
+</div>
+<div class="modal-body">
+<form>
+<div class="form-group mb-4">
+<div id="js-code-block" class="js-codemirror">
+<textarea rows="20" cols="60" class="form-control"></textarea>
+</div>
+</div>
+<div class="text-center">
+<button class="btn btn-space btn-dw" type="submit">Insert Code Block</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="js-no-cache"></div>
+
+<script>
+        loadJQ.addEventListener('load', function () {
+            $(document).ready(function() {
+                $.getJSON('/articles/ajax/bypass.json', { article_id: 495192 }, function(html) {
+                    $('#js-no-cache').html(html.snippet);
+                });
+            });
+        });
+        </script>
+
+<div class="modal fade" id="dw-signup" tabindex="-1" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-body">
+<div id="dw-inject-signup"></div>
+</div>
+</div>
+</div>
+</div>
+<nav id="dw-sidebar" class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1">
+<form class="d-xl-none mx-2 mt-3" action="/search/index" method="get" role="search" aria-label="Sitewide">
+<div class="input-group input-group-sm">
+<input id="dw-sidebar-search" type="search" name="q" value="" autocomplete="on" placeholder="Search &hellip;" class="form-control">
+<label for="dw-sidebar-search" class="visually-hidden">Search</label>
+<button type="submit" class="btn btn-dw rounded-pill rounded-start">
+<i role="presentation" class="fas fa-search dw-btn-icon"></i>
+<span class="visually-hidden">Search</span>
+</button>
+</div>
+</form>
+<ul class="sidebar-elements">
+
+<li role="separator" class="divider">Forum Categories</li>
+<li id="dw-menu-1" class="parent">
+<a data-bs-toggle="collapse" class="collapsed" href="#dw-submenu-1" role="button" aria-expanded="false" aria-controls="dw-submenu-1">
+<i role="presentation" class="fas fa-fw fa-laptop"></i>
+Hardware/Software </a>
+</li>
+<li id="dw-menu-4" class="parent">
+<a data-bs-toggle="collapse" class="collapsed" href="#dw-submenu-4" role="button" aria-expanded="false" aria-controls="dw-submenu-4">
+<i role="presentation" class="fas fa-fw fa-code"></i>
+Programming </a>
+</li>
+<li id="dw-menu-5" class="parent">
+<a data-bs-toggle="collapse" class="collapsed" href="#dw-submenu-5" role="button" aria-expanded="false" aria-controls="dw-submenu-5">
+<i role="presentation" class="fas fa-fw fa-tv-music"></i>
+Digital Media </a>
+</li>
+<li id="dw-menu-3" class="parent">
+<a data-bs-toggle="collapse" class="collapsed" href="#dw-submenu-3" role="button" aria-expanded="false" aria-controls="dw-submenu-3">
+<i role="presentation" class="fas fa-fw fa-coffee"></i>
+Community Center </a>
+</li>
+
+<li role="separator" class="divider">Latest Content</li>
+<li><a href="/articles/latest/newest"><i role="presentation" class="fa-fw fas fa-hourglass-start"></i>Newest Topics</a></li>
+<li><a href="/articles/latest"><i role="presentation" class="fa-fw fas fa-hourglass-end"></i>Latest Topics</a></li>
+<li><a href="/posts/index/0"><i role="presentation" class="fas fa-fw fa-comment-alt-lines"></i>Latest Posts</a></li>
+<li><a href="/community/tags/0/articles"><i role="presentation" class="fa-fw fas fa-tag"></i>Top Tags</a></li>
+<li><a href="/rss"><i role="presentation" class="fa-fw fas fa-rss"></i>Topics Feed</a></li>
+
+<li role="separator" class="divider">Social</li>
+
+<li><a href="/stats/toplist"><i role="presentation" class="fa-fw fas fa-list-ol"></i>Top Members</a></li>
+
+<li role="separator" class="divider">Community Functions</li>
+<li><a href="/donate/index"><i role="presentation" class="fa-fw fas fa-donate"></i>DaniWeb Premium</a></li>
+<li><a href="/email/archive"><i role="presentation" class="fa-fw fas fa-archive"></i>Newsletter Archive</a></li>
+<li><a href="/welcome/syntax"><i role="presentation" class="fa-fw fab fa-markdown"></i>Markdown Syntax</a></li>
+<li><a href="/welcome/rules"><i role="presentation" class="fa-fw fas fa-gavel"></i>Community Rules</a></li>
+<li role="separator" class="divider">Developer APIs</li>
+<li><a href="/connect/developers"><i role="presentation" class="fa-fw fas fa-code-branch"></i>Connect API</a></li>
+<li><a href="/welcome/api"><i role="presentation" class="fa-fw fas fa-file-code"></i>Forum API Docs</a></li>
+<li role="separator" class="divider">Legal</li>
+<li><a href="/connect/welcome/tos"><i role="presentation" class="fa-fw fas fa-copyright"></i>Terms of Service</a></li>
+<li><a href="/connect/welcome/privacy"><i role="presentation" class="fa-fw fas fa-user-shield"></i>Privacy Policy</a></li>
+<li role="separator" class="divider"></li>
+<li><a href="/welcome/faq"><i role="presentation" class="fa-fw far fa-question-circle"></i>FAQ</a></li>
+<li><a href="/welcome/about"><i role="presentation" class="fa-fw fas fa-address-card"></i>About Us</a></li>
+<li><a href="/welcome/advertising"><i role="presentation" class="fa-fw fas fa-comment-dollar"></i>Advertise</a></li>
+<li><a href="/welcome/contact"><i role="presentation" class="fa-fw fas fa-map-marker-alt"></i>Contact Us</a></li>
+</ul>
+<div class="small text-center p-5">&copy; 2022 DaniWeb&reg; LLC</div>
+</nav>
+</body>
+</html>
