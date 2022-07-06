@@ -19,11 +19,11 @@ func (p *Parser) Parse(fileName, pattern string) ([]string, string, error) {
 		return []string{""}, pattern, err
 	}
 	row := string(buf)
-	if p.Params.IgnoreRegister {
+	if p.Params.IgnoreRegister {// if we need ignore register, we make pattern and row lower register
 		row = strings.ToLower(row)
 		pattern = strings.ToLower(pattern)
 	}
 	// split buffer by newline
-	rows := strings.Split(strings.ReplaceAll(row, "\r\n", "\n"), "\n")
+	rows := strings.Split(strings.ReplaceAll(row, "\r\n", "\n"), "\n")// replace all newlines
 	return rows, pattern, nil
 }

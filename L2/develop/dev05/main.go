@@ -47,14 +47,14 @@ func (a *App) Set() {
 
 func main() {
 	grepCommand := flag.NewFlagSet("dev05_grep", flag.ExitOnError)
-	afterLength = grepCommand.Int("a", 0, "number of sorted column")
-	beforeLength = grepCommand.Int("b", 0, "number of sorted column")
-	contextLength = grepCommand.Int("c", 0, "number of sorted column")
-	countOption = grepCommand.Bool("count", false, "number of sorted column")
-	ignoreRegister = grepCommand.Bool("i", false, "number sorting by ascendent")
-	invertOption = grepCommand.Bool("v", false, "number sorting by ascendent")
-	fixedOption = grepCommand.Bool("F", false, "number sorting by ascendent")
-	lineNumOption = grepCommand.Bool("n", false, "number of sorted column")
+	afterLength = grepCommand.Int("a", 0, "length after match")
+	beforeLength = grepCommand.Int("b", 0, "length before match")
+	contextLength = grepCommand.Int("c", 0, "length from the both sides")
+	countOption = grepCommand.Bool("count", false, "print count of matched rows")
+	ignoreRegister = grepCommand.Bool("i", false, "ignore register while compare row and pattern")
+	invertOption = grepCommand.Bool("v", false, "print only not matched rows")
+	fixedOption = grepCommand.Bool("F", false, "compare all row")
+	lineNumOption = grepCommand.Bool("n", false, "print num of matched row")
 
 	if len(os.Args) < 2 {
 		fmt.Println("expected 'dev05_grep' subcommand")

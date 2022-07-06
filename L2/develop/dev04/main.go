@@ -8,23 +8,23 @@ import (
 
 func findAnagrams(arrP *[]string) map[string]*[]string{
 	arr := *arrP
-	anagrams := make(map[string]*[]string)
+	anagrams := make(map[string]*[]string)// create map with groups of anagrams
 	for i:= range arr {
-		word := strings.Split(arr[i], "")
-		sort.Strings(word)
-		key := strings.Join(word, "")
-		if anagrams[key] == nil {
+		word := strings.Split(arr[i], "")// split input string into letters
+		sort.Strings(word)// sort letters
+		key := strings.Join(word, "")// join letters
+		if anagrams[key] == nil {// check if group does not exist
 			anagrams[key] = new([]string)
 			*anagrams[key] = append(*anagrams[key], arr[i])
 		} else {
 			*anagrams[key] = append(*anagrams[key], arr[i])
 		}
 	}
-	for i := range anagrams {
+	for i := range anagrams {// loop over angrams group
 		if len(*anagrams[i]) == 1 {
-			delete(anagrams, i)
+			delete(anagrams, i)// reject single-worded groups
 		} else {
-			sort.Strings(*anagrams[i])
+			sort.Strings(*anagrams[i])// sort group
 			fmt.Println(*anagrams[i])
 		}
 	}
